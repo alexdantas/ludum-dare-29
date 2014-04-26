@@ -55,9 +55,6 @@ game.playerEntity = me.ObjectEntity.extend({
 		// (absolute value, don't worry)
 		this.standingThreshold = 0.2;
 
-		// Deceleration
-		this.decel = new me.Vector2d(0.7, 0);
-
 		// Animations based on a sprite sheet.
 		//
 		// We tell what sprite indexes makes the animation,
@@ -109,48 +106,35 @@ game.playerEntity = me.ObjectEntity.extend({
 		// If player holds this key, we make the player run
 		this.running = me.input.keyStatus("boost");
 
+		if (me.input.isKeyPressed("jump")) {
+
+			this.standing = false;
+
+			// Will only jump if the player's not
+			// already jumping or falling
+			if (!this.jumping && !this.falling) {
+
+				// Set y speed to it's maximum defined value.
+				// Gravity will take care of the rest.
+				this.vel.y = -this.maxVel.y * me.timer.tick;
+
+				this.jumping = true;
+			}
+		}
+
+		var walkedOnThisFrame = false;
+
 		if (me.input.isKeyPressed("left")) {
 
-			this.standing    = false;
-			this.facingRight = false;
-
-			// Smooth movement - also, considering the ticker
-			this.vel.x -= ((this.vel.x <= 0) ? this.accel.x : this.decel.x);
-			this.vel.x *= me.timer.tick;
-
-			// If the player is running, will achieve maximum
-			// speed anyways.
-			//
-			// If it's only walking, we should limit the speed
-			// here.
-			if (! this.running) {
-				this.vel.x = this.vel.x.clamp(
-					-this.maxWalkingVelocity.x,
-					 this.maxWalkingVelocity.x
-				);
-				// set walking animation
-			}
+			this.standing     = false;
+			this.facingRight  = false;
+			walkedOnThisFrame = true;
 
 		} else if (me.input.isKeyPressed("right")) {
 
-			this.standing    = false;
-			this.facingRight = true;
-
-			// Smooth movement - also, considering the ticker
-			this.vel.x += ((this.vel.x >= 0) ? this.accel.x : this.decel.x);
-			this.vel.x *= me.timer.tick;
-
-			// If the player is running, will achieve maximum
-			// speed anyways.
-			//
-			// If it's only walking, we should limit the speed
-			// here.
-			if (! this.running) {
-				this.vel.x = this.vel.x.clamp(
-					-this.maxWalkingVelocity.x,
-					 this.maxWalkingVelocity.x
-				);
-			}
+			this.standing     = false;
+			this.facingRight  = true;
+			walkedOnThisFrame = true;
 
 		} else {
 
@@ -165,18 +149,25 @@ game.playerEntity = me.ObjectEntity.extend({
 				this.standing = true;
 		}
 
-		if (me.input.isKeyPressed("jump")) {
+		// Updating speed based on the previous input.
+		if (! this.standing && walkedOnThisFrame) {
 
-			this.standing = false;
+			var speedIncrease = this.accel.x *= me.timer.tick;
 
-			if (!this.jumping && !this.falling) {
+			this.vel.x += ((this.facingRight) ?
+						     speedIncrease :
+						    -speedIncrease);
 
-				// Set y speed to it's maximum defined value.
-				// Gravity will take care of the rest.
-				this.vel.y = -this.maxVel.y * me.timer.tick;
-
-				// Update the internal flag
-				this.jumping = true;
+			// If the player is running, will achieve maximum
+			// speed anyways.
+			//
+			// If it's only walking, we should limit the speed
+			// here.
+			if (! this.running) {
+				this.vel.x = this.vel.x.clamp(
+					-this.maxWalkingVelocity.x,
+					 this.maxWalkingVelocity.x
+				);
 			}
 		}
 
