@@ -50,6 +50,11 @@ game.playerEntity = me.ObjectEntity.extend({
 			this.maxRunningVelocity.y
 		);
 
+		// X speed must be lower than this so
+		// we can apply the "standing" sprite
+		// (absolute value, don't worry)
+		this.standingThreshold = 0.2;
+
 		// Deceleration
 		this.decel = new me.Vector2d(0.7, 0);
 
@@ -60,6 +65,7 @@ game.playerEntity = me.ObjectEntity.extend({
 		this.renderable.addAnimation("standing", [0, 5], 4000);
 		this.renderable.addAnimation("jumping",  [1, 1]);
 		this.renderable.addAnimation("walking",  [2, 3, 4, 3], 150);
+		this.renderable.addAnimation("running",  [2, 3, 4, 3], 75);
 		this.renderable.addAnimation("climbing", [3, 4, 5, 4]);
 
 		// This forces the current animation.
@@ -72,6 +78,7 @@ game.playerEntity = me.ObjectEntity.extend({
 
 		// Here's all the flags
 		// They tell how the player is behaving _right now_
+		this.standing    = true;
 		this.facingRight = true;
 		this.running     = false;
 		this.invincible  = false;
@@ -104,6 +111,7 @@ game.playerEntity = me.ObjectEntity.extend({
 
 		if (me.input.isKeyPressed("left")) {
 
+			this.standing    = false;
 			this.facingRight = false;
 
 			// Smooth movement - also, considering the ticker
@@ -122,12 +130,10 @@ game.playerEntity = me.ObjectEntity.extend({
 				);
 				// set walking animation
 			}
-			// set running animation
-			if (!this.renderable.isCurrentAnimation("walking"))
-				this.renderable.setCurrentAnimation("walking");
 
 		} else if (me.input.isKeyPressed("right")) {
 
+			this.standing    = false;
 			this.facingRight = true;
 
 			// Smooth movement - also, considering the ticker
@@ -144,25 +150,24 @@ game.playerEntity = me.ObjectEntity.extend({
 					-this.maxWalkingVelocity.x,
 					 this.maxWalkingVelocity.x
 				);
-				// set walking animation
 			}
-			// set running animation
-			if (!this.renderable.isCurrentAnimation("walking"))
-				this.renderable.setCurrentAnimation("walking");
 
 		} else {
-
-			if (!this.renderable.isCurrentAnimation("standing"))
-				this.renderable.setCurrentAnimation("standing");
 
 			// No need to make the player stop
 			// (friction is handled by melonJS)
 
 			// Sudden stop
 			//this.vel.x = 0;
+
+			if ((this.vel.x >= -this.standingThreshold) &&
+				(this.vel.x <=  this.standingThreshold))
+				this.standing = true;
 		}
 
 		if (me.input.isKeyPressed("jump")) {
+
+			this.standing = false;
 
 			if (!this.jumping && !this.falling) {
 
@@ -175,14 +180,8 @@ game.playerEntity = me.ObjectEntity.extend({
 			}
 		}
 
-		if (this.jumping || this.falling)
-			if (!this.renderable.isCurrentAnimation("jumping"))
-				this.renderable.setCurrentAnimation("jumping");
-
-		// Flipping the sprite if needed.
-		this.flipX(this.facingRight);
-
-		// Updates the animation.
+		// Updates and commits the animation.
+		this.updateAnimation();
 		this.parent(delta);
 
 		// Now, to updating the logical movement.
@@ -232,6 +231,32 @@ game.playerEntity = me.ObjectEntity.extend({
 		// If we return false, the player does
 		// not get redrawn.
 		return true;
+	},
+
+	/**
+	 * Updates internal animation, based on
+	 * all the player's flags.
+	 *
+	 * @note: Must be called before melonJS' `updateAnimation`!
+	 */
+	updateAnimation : function() {
+
+		// Which animation we'll apply now
+		// By default, we'll assume the player is standing
+		var animation = "";
+
+		if      (this.jumping || this.falling) animation = "jumping";
+		else if (this.standing)                animation = "standing";
+		else if (this.running)                 animation = "running";
+		else                                   animation = "walking";
+
+		// Flipping the sprite if needed.
+		// (since all sprites are by default facing right)
+		this.flipX(this.facingRight);
+
+		// Applying!
+		if (!this.renderable.isCurrentAnimation(animation))
+			this.renderable.setCurrentAnimation(animation);
 	}
 });
 
