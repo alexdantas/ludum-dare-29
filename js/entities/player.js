@@ -1,6 +1,14 @@
 /* Player entity.
  *
  * The character you control around the game.
+ *
+ * Thanks:
+ * - For giving a perspective on implementing variable-height jump
+ *   http://gamedev.stackexchange.com/a/44766
+ * - Same here (this is way easier to implement)
+ *   http://documentation.flatredball.com/frb/docs/?title=Tutorials:Platforer:Variable-Height_Jumps
+ * - Nice tutorial on jump physics' ideas
+ *   http://poemdexter.com/blog/jump-physics-games/
  */
 
 /*global game,me*/
@@ -19,32 +27,43 @@ game.playerEntity = me.ObjectEntity.extend({
 
 		this.parent(x, y, settings);
 
+		// Normally things outside the screen (viewport)
+		// are not updated.
+		// It's not the case of the player.
+		this.alwaysUpdate = true;
+
 		// Adjusting the collision rectangle to the sprite
 		// (not assuming the whole image)
 		var shape = this.getShape();
 		shape.pos.x = 7;
 		shape.resize(16, shape.height - 1);
 
-		// Deceleration
+		// Maximum speed on which we
+		// throw the player up
+		var maxJumpVelocity = 10;
+
+		// Deceleration when walking and falling.
+		// (it is automatically handled by melonJS)
 		this.setFriction(0.65, 0);
 
 		// Initial speed when walking
-		this.setVelocity(0.9, 15);
+		this.setVelocity(0.9, maxJumpVelocity);
 
 		// Maximum velocity the player can get
 		// while walking.
-		this.maxWalkingVelocity = new me.Vector2d();
+		this.maxWalkingVelocity   = new me.Vector2d();
 		this.maxWalkingVelocity.x = 3.1;
-		this.maxWalkingVelocity.y = 15;
+		this.maxWalkingVelocity.y = maxJumpVelocity;
 
 		// Maximum velocity the player can get
 		// while running.
-		this.maxRunningVelocity = new me.Vector2d();
+		this.maxRunningVelocity   = new me.Vector2d();
 		this.maxRunningVelocity.x = 5;
-		this.maxRunningVelocity.y = 15;
+		this.maxRunningVelocity.y = maxJumpVelocity;
 
-		// melonJS assures it'll never go faster
-		// than this.
+		// The absolute maximum velocity the player
+		// can be at any times
+		// (melonJS assures it'll never get faster than this)
 		this.setMaxVelocity(
 			this.maxRunningVelocity.x,
 			this.maxRunningVelocity.y
@@ -79,6 +98,15 @@ game.playerEntity = me.ObjectEntity.extend({
 		this.facingRight = true;
 		this.running     = false;
 		this.invincible  = false;
+		this.jumping     = false;
+
+		// Maximum time (ms) that the user can hold
+		// the jump key, thus making the player jump higher
+		this.jumpTimerDelta = 150;
+
+		// Number of seconds that holding the Jump key
+		// will have effect
+		this.jumpKeyReleased = false;
 
 		this.health = 100;
 
@@ -106,21 +134,7 @@ game.playerEntity = me.ObjectEntity.extend({
 		// If player holds this key, we make the player run
 		this.running = me.input.keyStatus("boost");
 
-		if (me.input.isKeyPressed("jump")) {
-
-			this.standing = false;
-
-			// Will only jump if the player's not
-			// already jumping or falling
-			if (!this.jumping && !this.falling) {
-
-				// Set y speed to it's maximum defined value.
-				// Gravity will take care of the rest.
-				this.vel.y = -this.maxVel.y * me.timer.tick;
-
-				this.jumping = true;
-			}
-		}
+		this.handleJump();
 
 		var walkedOnThisFrame = false;
 
@@ -176,6 +190,7 @@ game.playerEntity = me.ObjectEntity.extend({
 		this.parent(delta);
 
 		// Now, to updating the logical movement.
+		// (melonJS function)
 		this.updateMovement();
 
 		if (!this.renderable.isFlickering())
@@ -187,7 +202,7 @@ game.playerEntity = me.ObjectEntity.extend({
 		if (res) {
 
 			// Did we Collided with an enemy?
-			if (res.obj.type == me.game.ENEMY_OBJECT) {
+			if (res.obj.type === me.game.ENEMY_OBJECT) {
 
 				// Check if we jumped on it
 				if ((res.y > 0) && !this.jumping) {
@@ -248,6 +263,45 @@ game.playerEntity = me.ObjectEntity.extend({
 		// Applying!
 		if (!this.renderable.isCurrentAnimation(animation))
 			this.renderable.setCurrentAnimation(animation);
+	},
+
+	/**
+	 * Logic behind the player jumping.
+	 *
+	 * It has a variable jumping height - like dem Mario gamezz biatch.
+	 */
+	handleJump : function() {
+
+		var iWannaJump = (me.input.keyStatus("jump"));
+		var imOnGround = (!this.falling && !this.jumping);
+
+		// Static local variable that we use to
+		// measure if we can jump higher by holding
+		// the jump key
+		this.jumpTimer = this.jumpTimer || 0;
+
+		if (imOnGround && iWannaJump) {
+
+			this.jumping = true;
+
+			this.vel.y = -this.maxVel.y * me.timer.tick;
+
+			// Opening a window of time on which the player
+			// can hold the button to jump higher
+			this.jumpTimer = me.timer.getTime();
+		}
+		else if (!imOnGround && iWannaJump) {
+
+			// Only jumping a little higher if the
+			// timer allows.
+			if ((me.timer.getTime() - this.jumpTimer) < this.jumpTimerDelta) {
+
+				this.vel.y = -this.maxVel.y * me.timer.tick;
+			}
+		}
+
+		// Why is this here?
+		this.standing = false;
 	}
 });
 
