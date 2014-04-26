@@ -68,16 +68,6 @@ var game = {
 		me.pool.register("coin",   game.coinEntity);
 		me.pool.register("enemy",  game.enemyEntity);
 
-		// Enable the keyboard
-		// Supporting both arrow keys and WASD
-		me.input.bindKey(me.input.KEY.LEFT,  "left");
-		me.input.bindKey(me.input.KEY.A,     "left");
-		me.input.bindKey(me.input.KEY.RIGHT, "right");
-		me.input.bindKey(me.input.KEY.D,     "right");
-		me.input.bindKey(me.input.KEY.UP,    "jump",  true);
-		me.input.bindKey(me.input.KEY.W,     "jump",  true);
-		me.input.bindKey(me.input.KEY.SHIFT, "boost", true);
-
 		// Start the game.
 		me.state.change(me.state.MENU);
 	}

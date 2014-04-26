@@ -25,8 +25,33 @@ game.playerEntity = me.ObjectEntity.extend({
 		shape.pos.x = 7;
 		shape.resize(16, shape.height - 1);
 
-		// x,y speeds when walking
-		this.setVelocity(2.5, 15);
+		// Deceleration
+		this.setFriction(0.65, 0);
+
+		// Initial speed when walking
+		this.setVelocity(0.9, 15);
+
+		// Maximum velocity the player can get
+		// while walking.
+		this.maxWalkingVelocity = new me.Vector2d();
+		this.maxWalkingVelocity.x = 3.1;
+		this.maxWalkingVelocity.y = 15;
+
+		// Maximum velocity the player can get
+		// while running.
+		this.maxRunningVelocity = new me.Vector2d();
+		this.maxRunningVelocity.x = 5;
+		this.maxRunningVelocity.y = 15;
+
+		// melonJS assures it'll never go faster
+		// than this.
+		this.setMaxVelocity(
+			this.maxRunningVelocity.x,
+			this.maxRunningVelocity.y
+		);
+
+		// Deceleration
+		this.decel = new me.Vector2d(0.7, 0);
 
 		// Animations based on a sprite sheet.
 		//
@@ -45,11 +70,13 @@ game.playerEntity = me.ObjectEntity.extend({
 		// animation AND THEN calling this.
 		this.renderable.setCurrentAnimation("standing");
 
-		// My custom flag to tell when to flip the sprites
+		// Here's all the flags
+		// They tell how the player is behaving _right now_
 		this.facingRight = true;
+		this.running     = false;
+		this.invincible  = false;
 
 		this.health = 100;
-		this.invincible = false;
 
 		// Tells display to follow our position on both axis.
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
@@ -70,27 +97,56 @@ game.playerEntity = me.ObjectEntity.extend({
 			return false;
 		}
 
-		// To make the player walk faster or not.
-		var boost = this.accel.x;
+		// Handling input
 
-		if (me.input.isKeyPressed("boost"))
-			console.log("OPRESSE");
-
-		var speedIncrease = boost * me.timer.tick;
+		// If player holds this key, we make the player run
+		this.running = me.input.keyStatus("boost");
 
 		if (me.input.isKeyPressed("left")) {
+
 			this.facingRight = false;
 
-			this.vel.x -= speedIncrease;
+			// Smooth movement - also, considering the ticker
+			this.vel.x -= ((this.vel.x <= 0) ? this.accel.x : this.decel.x);
+			this.vel.x *= me.timer.tick;
 
+			// If the player is running, will achieve maximum
+			// speed anyways.
+			//
+			// If it's only walking, we should limit the speed
+			// here.
+			if (! this.running) {
+				this.vel.x = this.vel.x.clamp(
+					-this.maxWalkingVelocity.x,
+					 this.maxWalkingVelocity.x
+				);
+				// set walking animation
+			}
+			// set running animation
 			if (!this.renderable.isCurrentAnimation("walking"))
 				this.renderable.setCurrentAnimation("walking");
 
 		} else if (me.input.isKeyPressed("right")) {
+
 			this.facingRight = true;
 
-			this.vel.x += speedIncrease;
+			// Smooth movement - also, considering the ticker
+			this.vel.x += ((this.vel.x >= 0) ? this.accel.x : this.decel.x);
+			this.vel.x *= me.timer.tick;
 
+			// If the player is running, will achieve maximum
+			// speed anyways.
+			//
+			// If it's only walking, we should limit the speed
+			// here.
+			if (! this.running) {
+				this.vel.x = this.vel.x.clamp(
+					-this.maxWalkingVelocity.x,
+					 this.maxWalkingVelocity.x
+				);
+				// set walking animation
+			}
+			// set running animation
 			if (!this.renderable.isCurrentAnimation("walking"))
 				this.renderable.setCurrentAnimation("walking");
 
@@ -99,7 +155,11 @@ game.playerEntity = me.ObjectEntity.extend({
 			if (!this.renderable.isCurrentAnimation("standing"))
 				this.renderable.setCurrentAnimation("standing");
 
-			this.vel.x = 0;
+			// No need to make the player stop
+			// (friction is handled by melonJS)
+
+			// Sudden stop
+			//this.vel.x = 0;
 		}
 
 		if (me.input.isKeyPressed("jump")) {

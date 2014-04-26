@@ -26,6 +26,15 @@ game.PlayScreen = me.ScreenObject.extend({
 		// Add our HUD to the game world
 		this.HUD = new game.HUD.Container();
 		me.game.world.addChild(this.HUD);
+
+		// Supporting both arrow keys and WASD
+		me.input.bindKey(me.input.KEY.LEFT,  "left");
+		me.input.bindKey(me.input.KEY.A,     "left");
+		me.input.bindKey(me.input.KEY.RIGHT, "right");
+		me.input.bindKey(me.input.KEY.D,     "right");
+		me.input.bindKey(me.input.KEY.UP,    "jump",  true);
+		me.input.bindKey(me.input.KEY.W,     "jump",  true);
+		me.input.bindKey(me.input.KEY.SHIFT, "boost", false, true);
 	},
 
 	/**
@@ -35,6 +44,15 @@ game.PlayScreen = me.ScreenObject.extend({
 
 		// remove the HUD from the game world
 		me.game.world.removeChild(this.HUD);
+
+		// Supporting both arrow keys and WASD
+		me.input.unbindKey(me.input.KEY.LEFT,  "left");
+		me.input.unbindKey(me.input.KEY.A,     "left");
+		me.input.unbindKey(me.input.KEY.RIGHT, "right");
+		me.input.unbindKey(me.input.KEY.D,     "right");
+		me.input.unbindKey(me.input.KEY.UP,    "jump",  true);
+		me.input.unbindKey(me.input.KEY.W,     "jump",  true);
+		me.input.unbindKey(me.input.KEY.SHIFT, "boost", true);
 	}
 });
 
