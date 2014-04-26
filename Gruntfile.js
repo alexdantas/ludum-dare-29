@@ -1,3 +1,8 @@
+/**
+ * - `Makefile` if for `make`
+ * - `Rakefile` is for `rake`,
+ * - `Gruntfile` is for `grunt` :)
+ */
 
 module.exports = function(grunt) {
 	grunt.initConfig({
@@ -46,11 +51,39 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+
+		// Synchronize all the data on `build`
+		// directory to a remote server.
+		// Configure it here
+		rsync: {
+			options: {
+				recursive: true
+			},
+			dist: {
+				options: {
+					src: 'build/',
+					dest: '/home/alexd075/public_html/tmp',
+					host: 'alexd075@alexdantas.net',
+					port: 2222,
+					syncDestIgnoreExcl: true
+				}
+			}
+		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-processhtml');
-	grunt.registerTask('default', ['concat', 'uglify', 'copy', 'processhtml']);
-}
+	grunt.loadNpmTasks('grunt-rsync');
+
+	// Things that will run by default
+	grunt.registerTask('default', [
+		'concat',
+		'uglify',
+		'copy',
+		'processhtml',
+		'rsync'
+	]);
+};
+

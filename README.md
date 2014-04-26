@@ -33,6 +33,7 @@ And then:
 Here's how the code is laid out:
 
 | directory            | contents |
+| -------------------- | -------- |
 | `index.html`         | Entry point for the game; visual elements |
 | `data`               | All resources; images, audio, fonts, maps... |
 | `data/audio`         | All things related to sound |
