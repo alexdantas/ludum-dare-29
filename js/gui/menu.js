@@ -5,7 +5,7 @@
  * Displays items that can be selected or not.
  */
 
-/*global me*/
+/*global me game*/
 
 // create a basic GUI Object
 me.MenuItem = me.GUI_Object.extend({
@@ -22,10 +22,16 @@ me.MenuItem = me.GUI_Object.extend({
 		settings.spriteheight = this.image.height;
 		this.parent(x, y, settings);
 
-		// define the object z order
-		this.z = 4;
+		this.label    = label;
+		this.callback = callback;
 
-		// Random number is even (50% chance)
+		// Our big daddy
+		this.menu = menu;
+
+		// We'll randomly flip the sprite horizontally
+		// and vertically, making the menu look nice
+		//
+		// (testing if a random number is even, 50% chance)
 		if (Number.prototype.random(0, 9)%2 == 0)
 			this.flipX(true);
 
@@ -35,11 +41,9 @@ me.MenuItem = me.GUI_Object.extend({
 		// Make sure we use screen coordinates
 		this.floating = true;
 
-		this.label    = label;
-		this.callback = callback;
-
-		// Our big daddy
-		this.menu = menu;
+		// Putting on front of most things
+		// (related to the menu z order)
+		this.z = 24;
 	},
 
 	toggle : function(option) {
@@ -85,8 +89,10 @@ me.Menu = me.ObjectContainer.extend({
 		this.parent(x, y);
 
 		// Not wasting CPU with this
-		this.autoSort = false;
+		this.autoSort   = false;
 		this.collidable = false;
+
+		// Put at the front of most things
 		this.z = 25;
 	},
 
@@ -99,7 +105,7 @@ me.Menu = me.ObjectContainer.extend({
 
 		this.addChild(new me.MenuItem(
 			this.pos.x,
-			this.pos.y + (this.children.length * 32) + (this.children.length * bottom_margin),
+			this.pos.y + game.tile(this.children.length) + (this.children.length * bottom_margin),
 			title,
 			this,
 			callback

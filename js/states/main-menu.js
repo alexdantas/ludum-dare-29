@@ -26,7 +26,7 @@ game.MainMenuState = me.ScreenObject.extend({
 			1
 		);
 
-		this.menu = new me.Menu(32 * 1, 32 * 8);
+		this.menu = new me.Menu(game.tile(1), game.tile(8));
 		this.menu.addItem(
 			"START",
 			function () {

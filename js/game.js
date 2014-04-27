@@ -14,8 +14,39 @@ var game = {
 		score : 0
 	},
 
-	/* Run as soon as the page loads
-	 * (all resources downloaded)
+	/**
+	 * Global tile size.
+	 * Throughout the game, this is the value that
+	 * will be used for the square tiles, width AND height.
+	 */
+	tile_size : 32,
+
+	/**
+	 * Returns the pixel coordinates for a specific
+	 * tile.
+	 *
+	 * This is so we can always work with tile sizes
+	 * instead of directly with pixels.
+	 */
+	tile : function(n) {
+		return (n * game.tile_size);
+	},
+
+	/**
+	 * Returns the pixel coordinates for half the
+	 * size of a regular tile.
+	 */
+	half_tile : function(n) {
+		return (n * (game.tile_size/2));
+	},
+
+	/**
+	 * This function runs as soon as the page loads.
+	 *
+	 * Meaning when all resources were downloaded from
+	 * the server (GET requests).
+	 *
+	 * At the end, it launches the Loading Screen.
 	 */
 	"onload" : function() {
 
@@ -46,8 +77,9 @@ var game = {
 		me.state.change(me.state.LOADING);
 	},
 
-	/* Run as soon as all the game resources loads
-	 * (past the loading screen)
+	/**
+	 * Run as soon as all the game resources loads
+	 * (past the loading screen).
 	 */
 	"loaded" : function() {
 
