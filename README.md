@@ -81,6 +81,9 @@ Acknowledgments:
   [A Step-by-step Game Creation Tutorial][tut], the best introduction to HTML5
   game development ever.
 * This project started with the [MelonJS boilerplate][boilerplate].
+* Some of the graphics (tileset and font) were based on
+  [GFXLib FuZED][fuzed], a package of assets for 2D platformers.
+  Thanks a lot, [Marc Russell][marc]!
 
 ## License
 
@@ -96,4 +99,6 @@ cannot do with the code.
 [bdnachi]: http://bdnachi.deviantart.com/
 [tut]: http://melonjs.github.io/tutorial/
 [boilerplate]: https://github.com/melonjs/boilerplate
+[fuzed]: http://opengameart.org/content/gfxlib-fuzed
+[marc]: http://spicypixel.net/
 
