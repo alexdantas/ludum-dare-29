@@ -1,5 +1,7 @@
 # Rabbit Hole
 
+![logo](http://alexdantas.net/games/ld29/data/image/logo.png)
+
 Game entry for [the Ludum Dare #29][ld29].
 It's a simple HTML5 2D platformer, powered by [melonJS][melonjs].
 
