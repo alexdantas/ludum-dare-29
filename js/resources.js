@@ -77,7 +77,7 @@ game.resources = [
 	{
 		name: "menu_font",
 		type: "image",
-		src:  "data/image/font/32x32_font.png"
+		src:  "data/image/font/font16x16.png"
 	},
 
 	//  _       __    ___   __

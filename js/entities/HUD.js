@@ -29,7 +29,12 @@ game.HUD.Container = me.ObjectContainer.extend({
 		this.name = "HUD";
 
 		// Adding our Score HUD at the right-bottom position
-		this.addChild(new game.HUD.score(630, 440));
+		this.addChild(
+			new game.HUD.score(
+				me.game.viewport.width,
+				me.game.viewport.height - 16
+			)
+		);
 	}
 });
 
@@ -44,11 +49,8 @@ game.HUD.score = me.Renderable.extend({
 		// (size does not matter here)
 		this.parent(new me.Vector2d(x, y), 10, 10);
 
-		// create a font
-		// this.font = new me.BitmapFont("menu_font", 32);
-		//this.font.set("right");
-
-		this.font = new me.Font("Arial", 32, '#000000', 'right');
+		this.font = new me.BitmapFont("menu_font", 16);
+		this.font.set("right");
 
 		// local copy of the global score
 		this.score = -1;
