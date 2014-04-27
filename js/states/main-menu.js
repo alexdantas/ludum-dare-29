@@ -30,7 +30,11 @@ game.MainMenuState = me.ScreenObject.extend({
 		this.menu.addItem(
 			"START",
 			function () {
-//				me.state.current().menu.label = "LEL";
+				// It's very ugly to directly
+				// access a game state...
+				me.state.current().startGame();
+
+//				menu.label = "LEL";
 //				me.state.current().menu.toggle();
 				console.log("Clicked first button");
 			}
@@ -108,12 +112,15 @@ game.MainMenuState = me.ScreenObject.extend({
 
 		this.handler = me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge) {
 
-			if (action == "enter") {
-				// Play some audio on tap/enter
-
-				me.state.change(me.state.STATE_PLAY);
-			}
+			if (action == "enter")
+				this.startGame();
 		});
+	},
+
+	startGame : function() {
+		// Play some audio before startin'
+
+		me.state.change(me.state.STATE_PLAY);
 	},
 
 	/**

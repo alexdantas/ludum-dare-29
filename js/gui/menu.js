@@ -1,13 +1,36 @@
 /**
- * A menu that can be interacted via both the keyboard
- * and mouse (and thus touch).
+ * A (vertical) menu that can be interacted with
+ * both the keyboard and mouse (and thus touch).
  *
  * Displays items that can be selected or not.
+ * It automatically handles positioning, images and
+ * stuff.
+ *
+ * All you need to do is provide item titles and callbacks.
+ *
+ * Example:
+ *
+ * var menu = new me.Menu(x, y);
+ *
+ * // You can add as many as you want
+ * menu.addItem(
+ *     "title",
+ *     function() {
+ *         console.log("Clicked");
+ *     }
+ * );
  */
 
 /*global me game*/
 
-// create a basic GUI Object
+/**
+ * A single Menu Item.
+ *
+ * @note Don't create standalone Items!
+ *       They're nothing without a menu to be attached to.
+ *
+ * Keep scrollin'.
+ */
 me.MenuItem = me.GUI_Object.extend({
 
 	init : function (x, y, label, menu, callback) {
@@ -81,6 +104,11 @@ me.MenuItem = me.GUI_Object.extend({
 	}
 });
 
+/**
+ * The Menu!
+ *
+ * Add items and such.
+ */
 me.Menu = me.ObjectContainer.extend({
 
 	init : function(x, y) {
