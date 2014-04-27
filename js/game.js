@@ -20,7 +20,7 @@ var game = {
 	"onload" : function() {
 
 		// Initialize the video.
-		if (!me.video.init("screen", 640, 480, true)) {
+		if (!me.video.init("screen", 480, 480, true)) {
 			alert("Your browser does not support HTML5 canvas.");
 			return;
 		}
@@ -66,7 +66,9 @@ var game = {
 		// when reading Tiled maps' entities.
 		me.pool.register("player", game.playerEntity);
 		me.pool.register("star",   game.starEntity);
-		me.pool.register("enemy",  game.enemyEntity);
+
+		me.pool.register("enemy-fire-walk",  game.enemyFireWalk);
+		me.pool.register("enemy-fire-stand", game.enemyFireStand);
 
 		// Start the game.
 		me.state.change(me.state.MENU);

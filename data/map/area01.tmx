@@ -73,15 +73,8 @@
   </object>
  </objectgroup>
  <objectgroup name="enemies" width="30" height="90">
-  <object name="enemy" x="352" y="256" width="320" height="32"/>
-  <object name="enemy" x="320" y="768" width="128" height="32"/>
-  <object name="enemy" x="704" y="608" width="128" height="32"/>
-  <object name="enemy" x="544" y="704" width="96" height="32"/>
-  <object name="enemy" x="224" y="832" width="64" height="32"/>
-  <object name="enemy" x="544" y="1280" width="96" height="32"/>
-  <object name="enemy" x="224" y="1408" width="160" height="32"/>
-  <object name="enemy" x="480" y="1312" width="64" height="32"/>
-  <object name="enemy" x="640" y="1248" width="192" height="32"/>
+  <object name="enemy-fire-walk" x="352" y="256" width="320" height="32"/>
+  <object name="enemy-fire-stand" x="704" y="192" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="stars" width="30" height="90">
   <object name="star" x="160" y="160" width="32" height="32"/>

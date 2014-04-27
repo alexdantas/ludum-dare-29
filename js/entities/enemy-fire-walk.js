@@ -1,16 +1,21 @@
 /**
- * A simple enemy that follows a pre-determined path.
+ * Simple enemy that walks left and right on a pre-determined path.
  *
- * It is specified on Tiled.
+ * AKA the red turtle of mario, except it doesn't detect if
+ * it's going to fall of a ledge.
+ *
+ * The path is specified on Tiled by the entity size.
  */
 
 /*global game,me*/
 
-game.enemyEntity = me.ObjectEntity.extend({
+game.enemyFireWalk = me.ObjectEntity.extend({
 
 	init : function(x, y, settings) {
 
 		// The `settings` hash is defined on Tiled.
+
+		// This image is defined on `resources.js`
 		settings.image = "fire-walk";
 
 		// There we specify `width`, which we'll use as the path
@@ -38,20 +43,22 @@ game.enemyEntity = me.ObjectEntity.extend({
 		// Adjusting the collision rectangle to the sprite
 		// (not taking the whole image)
 		var shape = this.getShape();
+
 		shape.pos.x = 4;
+		shape.pos.y = 4;
 		shape.resize(
-			shape.width - 2*shape.pos.x,
-			shape.height
+			shape.width  - 2*shape.pos.x,
+			shape.height - 2*shape.pos.y
 		);
 
 		// X and Y velocities
-		this.setVelocity(2.5, 6);
-
-		this.health = 10;
+		this.setVelocity(2, 6);
 
 		// Animation!
 		this.renderable.addAnimation("walking", [0, 1], 200);
 		this.renderable.setCurrentAnimation("walking");
+
+		this.health = 10;
 
 		this.collidable = true;
 		this.type = me.game.ENEMY_OBJECT;
@@ -94,14 +101,15 @@ game.enemyEntity = me.ObjectEntity.extend({
 				this.walkLeft = true;
 
 			// Make it walk
-			this.vel.x += ((this.walkLeft) ? (-this.accel.x * me.timer.tick) : (this.accel.x * me.timer.tick));
+			this.vel.x += ((this.walkLeft) ?
+						    -this.accel.x :
+						     this.accel.x) * me.timer.tick;
 
-			// Fliip the sprite if necessary
+			// Flip the sprite if necessary
 			this.flipX(this.walkLeft);
-
-		} else {
-			this.vel.x = 0;
 		}
+		else
+			this.vel.x = 0;
 
 		this.updateMovement();
 
