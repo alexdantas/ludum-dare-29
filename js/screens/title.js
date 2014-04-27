@@ -35,7 +35,8 @@ game.TitleScreen = me.ScreenObject.extend({
 				            me.game.viewport.height);
 
 				// font for the scrolling text
-				this.font = new me.BitmapFont("menu_font", 32);
+				// this.font = new me.BitmapFont("menu_font", 32);
+				this.font = new me.Font("Arial", 32);
 
 				// tween to animate the arrow
 				this.scrollertween = new me.Tween(this)
@@ -45,7 +46,7 @@ game.TitleScreen = me.ScreenObject.extend({
 
 				// For now the only messages supported are
 				// in ALL CAPS due to the bitmap font
-				this.scroller    = "THANKS FOR PLAYING THIS GAME";
+				this.scroller    = "Thanks for playing this game";
 				this.scrollerpos = 600;
 			},
 
@@ -65,7 +66,7 @@ game.TitleScreen = me.ScreenObject.extend({
 			},
 
 			draw : function(context) {
-				this.font.draw(context, "PRESS ENTER/CLICK/TAP TO PLAY", 20, 240);
+				this.font.draw(context, "Press Enter, Click or Tap to play", 20, 240);
 				this.font.draw(context, this.scroller, this.scrollerpos, 440);
 			},
 

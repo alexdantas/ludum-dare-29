@@ -63,6 +63,14 @@
  </layer>
  <objectgroup name="player" width="30" height="90">
   <object name="player" x="0" y="64" width="32" height="64"/>
+  <object x="960" y="2400" height="96"/>
+  <object name="me.LevelEntity" x="896" y="2400" width="64" height="96">
+   <properties>
+    <property name="duration" value="250"/>
+    <property name="fade" value="#000000"/>
+    <property name="to" value="area02"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="enemies" width="30" height="90">
   <object name="enemy" x="352" y="256" width="320" height="32"/>

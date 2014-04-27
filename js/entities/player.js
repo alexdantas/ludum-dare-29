@@ -213,7 +213,8 @@ game.playerEntity = me.ObjectEntity.extend({
 
 					this.jumping = true;
 
-				} else {
+				}
+				else {
 
 					// Oops, we got hit by an enemy
 					if (!this.invincible) {
@@ -221,8 +222,10 @@ game.playerEntity = me.ObjectEntity.extend({
 						this.health -= 20;
 
 						// Throw the player a la Castlevania
-						this.vel.x -= this.maxVel.x / 2 * me.timer.tick;
-						this.vel.y -= this.maxVel.y / 2 * me.timer.tick;
+						this.vel.x = 3 * ((this.vel.x > 0) ?
+										  -this.maxVel.x :
+										   this.maxVel.x) * me.timer.tick;
+						this.vel.y = -this.maxVel.y * me.timer.tick;
 						this.jumping = true;
 
 						// Flickering the animation and
