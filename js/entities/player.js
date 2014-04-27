@@ -19,11 +19,12 @@ game.playerEntity = me.ObjectEntity.extend({
 	init : function(x, y, settings) {
 
 		// Aside from the `settings` passed by Tiled
-		settings.image = "brian";
-		settings.width = 31;
-		settings.height = 52;
-		settings.spritewidth = 31;
-		settings.spriteheight = 52;
+		settings.image = "player-spritesheet";
+
+		settings.width  = 32;
+		settings.height = 64;
+		settings.spritewidth  = 32;
+		settings.spriteheight = 64;
 
 		this.parent(x, y, settings);
 
@@ -76,13 +77,13 @@ game.playerEntity = me.ObjectEntity.extend({
 
 		// Animations based on a sprite sheet.
 		//
-		// We tell what sprite indexes makes the animation,
+		// First argument are the sprite indexes for the animation,
 		// with an optional ms delay between them.
-		this.renderable.addAnimation("standing", [0, 5], 4000);
-		this.renderable.addAnimation("jumping",  [1, 1]);
-		this.renderable.addAnimation("walking",  [2, 3, 4, 3], 150);
-		this.renderable.addAnimation("running",  [2, 3, 4, 3], 75);
-		this.renderable.addAnimation("climbing", [3, 4, 5, 4]);
+		this.renderable.addAnimation("standing", [0]);
+		this.renderable.addAnimation("jumping",  [9]);
+		this.renderable.addAnimation("falling",  [10]);
+		this.renderable.addAnimation("walking",  [1, 2, 3, 2], 150);
+		this.renderable.addAnimation("running",  [4, 5, 6, 7], 75);
 
 		// This forces the current animation.
 		//
@@ -95,7 +96,7 @@ game.playerEntity = me.ObjectEntity.extend({
 		// Here's all the flags
 		// They tell how the player is behaving _right now_
 		this.standing    = true;
-		this.facingRight = true;
+		this.facingLeft  = false;
 		this.running     = false;
 		this.invincible  = false;
 		this.jumping     = false;
@@ -141,13 +142,13 @@ game.playerEntity = me.ObjectEntity.extend({
 		if (me.input.isKeyPressed("left")) {
 
 			this.standing     = false;
-			this.facingRight  = false;
+			this.facingLeft   = true;
 			walkedOnThisFrame = true;
 
 		} else if (me.input.isKeyPressed("right")) {
 
 			this.standing     = false;
-			this.facingRight  = true;
+			this.facingLeft   = false;
 			walkedOnThisFrame = true;
 
 		} else {
@@ -168,9 +169,9 @@ game.playerEntity = me.ObjectEntity.extend({
 
 			var speedIncrease = this.accel.x *= me.timer.tick;
 
-			this.vel.x += ((this.facingRight) ?
-						     speedIncrease :
-						    -speedIncrease);
+			this.vel.x += ((this.facingLeft) ?
+						    -speedIncrease :
+						     speedIncrease);
 
 			// If the player is running, will achieve maximum
 			// speed anyways.
@@ -254,14 +255,15 @@ game.playerEntity = me.ObjectEntity.extend({
 		// By default, we'll assume the player is standing
 		var animation = "";
 
-		if      (this.jumping || this.falling) animation = "jumping";
-		else if (this.standing)                animation = "standing";
-		else if (this.running)                 animation = "running";
-		else                                   animation = "walking";
+		if      (this.jumping)  animation = "jumping";
+		else if (this.falling)  animation = "falling";
+		else if (this.standing) animation = "standing";
+		else if (this.running)  animation = "running";
+		else                    animation = "walking";
 
 		// Flipping the sprite if needed.
 		// (since all sprites are by default facing right)
-		this.flipX(this.facingRight);
+		this.flipX(this.facingLeft);
 
 		// Applying!
 		if (!this.renderable.isCurrentAnimation(animation))

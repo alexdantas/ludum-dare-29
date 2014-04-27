@@ -18,17 +18,16 @@ game.resources = [
 	},
 
 	{
-		// Player Spritesheet
-		name: "brian",
+		name: "player-spritesheet",
 		type: "image",
-		src:  "data/image/sprite/brian-sheet.png"
+		src:  "data/image/sprite/player.png"
 	},
 
 	{
-		// Collectable Beer
-		name: "beer",
+		// Collectable star
+		name: "star-spritesheet",
 		type: "image",
-		src:  "data/image/sprite/beer.png"
+		src:  "data/image/sprite/star.png"
 	},
 
 	{

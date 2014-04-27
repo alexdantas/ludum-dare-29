@@ -65,7 +65,7 @@ var game = {
 		// That first string is the name we'll look for
 		// when reading Tiled maps' entities.
 		me.pool.register("player", game.playerEntity);
-		me.pool.register("coin",   game.coinEntity);
+		me.pool.register("star",   game.starEntity);
 		me.pool.register("enemy",  game.enemyEntity);
 
 		// Start the game.

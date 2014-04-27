@@ -79,18 +79,26 @@
   <object name="enemy" x="544" y="704" width="96" height="32"/>
   <object name="enemy" x="224" y="832" width="64" height="32"/>
   <object name="enemy" x="544" y="1280" width="96" height="32"/>
-  <object name="enemy" x="272" y="1392" width="160" height="32"/>
+  <object name="enemy" x="224" y="1408" width="160" height="32"/>
   <object name="enemy" x="480" y="1312" width="64" height="32"/>
   <object name="enemy" x="640" y="1248" width="192" height="32"/>
  </objectgroup>
- <objectgroup name="coins" width="30" height="90">
-  <object name="coin" x="160" y="160" width="32" height="32"/>
-  <object name="coin" x="32" y="800" width="32" height="32"/>
-  <object name="coin" x="32" y="832" width="32" height="32"/>
-  <object name="coin" x="32" y="864" width="32" height="32"/>
-  <object name="coin" x="0" y="864" width="32" height="32"/>
-  <object name="coin" x="32" y="896" width="32" height="32"/>
-  <object name="coin" x="64" y="864" width="32" height="32"/>
+ <objectgroup name="stars" width="30" height="90">
+  <object name="star" x="160" y="160" width="32" height="32"/>
+  <object name="star" x="416" y="160" width="32" height="32"/>
+  <object name="star" x="544" y="160" width="32" height="32"/>
+  <object name="star" x="448" y="672" width="32" height="32"/>
+  <object name="star" x="64" y="672" width="32" height="32"/>
+  <object name="star" x="64" y="704" width="32" height="32"/>
+  <object name="star" x="64" y="736" width="32" height="32"/>
+  <object name="star" x="64" y="768" width="32" height="32"/>
+  <object name="star" x="32" y="768" width="32" height="32"/>
+  <object name="star" x="64" y="800" width="32" height="32"/>
+  <object name="star" x="96" y="768" width="32" height="32"/>
+  <object name="star" x="128" y="736" width="32" height="32"/>
+  <object name="star" x="0" y="736" width="32" height="32"/>
+  <object name="star" x="64" y="640" width="32" height="32"/>
+  <object name="star" x="352" y="1312" width="32" height="32"/>
  </objectgroup>
  <layer name="fg" width="30" height="90">
   <data encoding="base64">
