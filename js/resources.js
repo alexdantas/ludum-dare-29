@@ -41,6 +41,11 @@ game.resources = [
 		type: "image",
 		src:  "data/image/sprite/enemy-2.png"
 	},
+	{
+		name: "spike",
+		type: "image",
+		src:  "data/image/sprite/spike.png"
+	},
 
 	{
 		// Parallax 1

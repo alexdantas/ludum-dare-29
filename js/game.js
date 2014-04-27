@@ -66,9 +66,14 @@ var game = {
 		// when reading Tiled maps' entities.
 		me.pool.register("player", game.playerEntity);
 		me.pool.register("star",   game.starEntity);
+		me.pool.register("spike",  game.spikeEntity);
 
 		me.pool.register("enemy-fire-walk",  game.enemyFireWalk);
 		me.pool.register("enemy-fire-stand", game.enemyFireStand);
+
+		// Defining some custom constants to uniquely
+		// identify some entities
+		me.game.SPIKE_OBJECT = "spike";
 
 		// Start the game.
 		me.state.change(me.state.MENU);

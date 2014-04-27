@@ -121,13 +121,12 @@ game.playerEntity = me.ObjectEntity.extend({
 	// Update the player position.
 	update : function(delta) {
 
-		// If we died, let's go back to the main menu
-		if (!this.inViewport || this.health <= 0) {
+		if (! this.alive)
+			return false;
 
-			me.device.vibrate(500);
-			me.game.world.removeChild(this);
-
-			me.state.change(me.state.MENU);
+		// Fell into outside the screen
+		if (! this.inViewport) {
+			this.die();
 			return false;
 		}
 
@@ -203,6 +202,11 @@ game.playerEntity = me.ObjectEntity.extend({
 
 		if (res) {
 
+			if (res.obj.type === me.game.SPIKE_OBJECT) {
+				this.die();
+				return false;
+			}
+
 			// Did we Collided with an enemy?
 			if (res.obj.type === me.game.ENEMY_OBJECT) {
 
@@ -222,6 +226,11 @@ game.playerEntity = me.ObjectEntity.extend({
 					if (!this.invincible) {
 
 						this.health -= 20;
+
+						if (this.health <= 0) {
+							this.die();
+							return false;
+						}
 
 						// Throw the player a la Castlevania
 						this.vel.x = 3 * ((this.vel.x > 0) ?
@@ -308,6 +317,18 @@ game.playerEntity = me.ObjectEntity.extend({
 
 		// Why is this here?
 		this.standing = false;
+	},
+
+	/**
+	 * Makes the player die and returns to the main menu.
+	 */
+	die : function() {
+
+		this.alive = false;
+		me.device.vibrate(500);
+		me.game.world.removeChild(this);
+
+		me.state.change(me.state.MENU);
 	}
 });
 
