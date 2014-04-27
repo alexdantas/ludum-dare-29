@@ -1,5 +1,5 @@
 /**
- * Screen that will be shown while the game
+ * State that will be shown while the game
  * is being played.
  *
  * Note: The game loop is hidden inside melonJS.
@@ -10,10 +10,10 @@
 
 /*global game,me*/
 
-game.PlayScreen = me.ScreenObject.extend({
+game.PlayState = me.ScreenObject.extend({
 
 	/**
-	 *  What to do when starting this screen.
+	 *  What to do when starting this state.
 	 */
 	onResetEvent : function() {
 
@@ -38,7 +38,7 @@ game.PlayScreen = me.ScreenObject.extend({
 	},
 
 	/**
-	 *  What to do when leaving this screen.
+	 *  What to do when leaving this state.
 	 */
 	onDestroyEvent : function() {
 

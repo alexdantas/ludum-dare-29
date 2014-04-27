@@ -328,7 +328,7 @@ game.playerEntity = me.ObjectEntity.extend({
 		me.device.vibrate(500);
 		me.game.world.removeChild(this);
 
-		me.state.change(me.state.MENU);
+		me.state.change(me.state.MAIN_MENU);
 	}
 });
 

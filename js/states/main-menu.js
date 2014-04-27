@@ -1,18 +1,19 @@
 /**
- * Title screen.
+ * Main Menu game state.
+ *
  * Shows the main menu and if the user presses
- * ENTER or clicks or taps the screen, goes to
- * the Play screen.
+ * ENTER or clicks or taps the state, goes to
+ * the Play state.
  *
  * It's a simple background image with a scrollable text.
  */
 
 /*global game,me*/
 
-game.TitleScreen = me.ScreenObject.extend({
+game.MainMenuState = me.ScreenObject.extend({
 
 	/**
-	 * Runs when entering the screen.
+	 * Runs when entering the state.
 	 */
 	onResetEvent : function() {
 
@@ -20,7 +21,7 @@ game.TitleScreen = me.ScreenObject.extend({
 		me.game.world.addChild(
 			new me.SpriteObject(
 				0, 0,
-				me.loader.getImage("title_screen")
+				me.loader.getImage("main-menu-bg")
 			),
 			1
 		);
@@ -35,7 +36,7 @@ game.TitleScreen = me.ScreenObject.extend({
 				            me.game.viewport.height);
 
 				// font for the scrolling text
-				this.font = new me.BitmapFont("menu_font", 16);
+				this.font = new me.BitmapFont("font16x16", 16);
 
 				// tween to animate the arrow
 				this.scrollertween = new me.Tween(this)
@@ -94,7 +95,7 @@ game.TitleScreen = me.ScreenObject.extend({
 	},
 
 	/**
-	 * Action to perform when leaving the screen (state change).
+	 * Action to perform when leaving the state (state change).
 	 */
 	onDestroyEvent : function() {
 		me.input.unbindKey(me.input.KEY.ENTER);

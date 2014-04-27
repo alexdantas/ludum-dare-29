@@ -3,7 +3,7 @@
  * Initializing melonJS and the "Game Namespace".
  */
 
-/*global me*/
+/*global me debugPanel*/
 
 var game = {
 
@@ -20,7 +20,7 @@ var game = {
 	"onload" : function() {
 
 		// Initialize the video.
-		if (!me.video.init("screen", 480, 480, true)) {
+		if (! me.video.init("screen", 480, 480, true)) {
 			alert("Your browser does not support HTML5 canvas.");
 			return;
 		}
@@ -53,8 +53,8 @@ var game = {
 
 		// All the game states/screens
 		// Each has it's file under the `js/screens` directory
-		me.state.set(me.state.MENU, new game.TitleScreen());
-		me.state.set(me.state.PLAY, new game.PlayScreen());
+		me.state.set(me.state.MAIN_MENU, new game.MainMenuState());
+		me.state.set(me.state.PLAY,      new game.PlayState());
 
 		// Global transition to occur between all states
 		me.state.transition("fade", "#000000", 250);
@@ -76,7 +76,7 @@ var game = {
 		me.game.SPIKE_OBJECT = "spike";
 
 		// Start the game.
-		me.state.change(me.state.MENU);
+		me.state.change(me.state.MAIN_MENU);
 	}
 };
 

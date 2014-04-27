@@ -59,9 +59,9 @@ game.resources = [
 		type: "image",
 		src:  "data/image/area01_bkg1.png"
 	},
+
 	{
-		// Title Screen
-		name: "title_screen",
+		name: "main-menu-bg",
 		type: "image",
 		src:  "data/image/gui/title_screen.png"
 	},
@@ -75,7 +75,7 @@ game.resources = [
 	// | |_  / / \ | |\ |  | |
 	// |_|   \_\_/ |_| \|  |_|
 	{
-		name: "menu_font",
+		name: "font16x16",
 		type: "image",
 		src:  "data/image/font/font16x16.png"
 	},
@@ -83,6 +83,11 @@ game.resources = [
 	//  _       __    ___   __
 	// | |\/|  / /\  | |_) ( (`
 	// |_|  | /_/--\ |_|   _)_)
+	{
+		name: "area00",
+		type: "tmx",
+		src:  "data/map/area00.tmx"
+	},
 	{
 		name: "area01",
 		type: "tmx",

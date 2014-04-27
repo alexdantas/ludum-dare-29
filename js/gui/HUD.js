@@ -49,7 +49,7 @@ game.HUD.score = me.Renderable.extend({
 		// (size does not matter here)
 		this.parent(new me.Vector2d(x, y), 10, 10);
 
-		this.font = new me.BitmapFont("menu_font", 16);
+		this.font = new me.BitmapFont("font16x16", 16);
 		this.font.set("right");
 
 		// local copy of the global score
