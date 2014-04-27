@@ -89,7 +89,7 @@ game.MainMenuState = me.ScreenObject.extend({
 			if (action == "enter") {
 				// Play some audio on tap/enter
 
-				me.state.change(me.state.PLAY);
+				me.state.change(me.state.STATE_PLAY);
 			}
 		});
 	},

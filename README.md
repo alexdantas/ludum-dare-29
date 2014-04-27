@@ -60,8 +60,9 @@ Here's how the code is laid out:
 | `data/image/sprite`  | Spritesheets or single sprites |
 | `data/map`           | Tiled maps |
 | `js`                 | Source code for the whole game; main `.js` files |
-| `js/entities`        | All entities things that interact with each other |
-| `js/screens`         | All screens that can be shown; game states |
+| `js/entities`        | Things that interact with each other (player, enemies...)|
+| `js/states`          | Game states (screens that can be shown |
+| `js/gui`             | Components of the user interface (menu, buttons...) |
 | `lib`                | Libraries used for the game (MelonJS) |
 | `lib/plugins`        | MelonJS plugins |
 | `css`                | Stylesheets |

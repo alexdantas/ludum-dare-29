@@ -51,10 +51,22 @@ var game = {
 	 */
 	"loaded" : function() {
 
-		// All the game states/screens
-		// Each has it's file under the `js/screens` directory
-		me.state.set(me.state.MAIN_MENU, new game.MainMenuState());
-		me.state.set(me.state.PLAY,      new game.PlayState());
+		// Defining all our game states.
+		// They're used by `me.state.change()`
+		// (these are just constants, ignore the right side)
+		me.state.STATE_MAIN_MENU    = me.state.USER + 0;
+		me.state.STATE_OPTIONS_MENU = me.state.SETTINGS;
+		me.state.STATE_CREDITS      = me.state.CREDITS;
+		me.state.STATE_GAME_OVER    = me.state.GAMEOVER;
+		me.state.STATE_AREA_SELECT  = me.state.USER + 2;
+		me.state.STATE_PLAY         = me.state.PLAY;
+
+		// Attaching our state constants to actual
+		// objects.
+		// Each one has it's file under the `js/screens` directory
+		me.state.set(me.state.STATE_MAIN_MENU, new game.MainMenuState());
+		me.state.set(me.state.STATE_PLAY,      new game.PlayState());
+		me.state.set(me.state.STATE_GAME_OVER, new game.GameOverState());
 
 		// Global transition to occur between all states
 		me.state.transition("fade", "#000000", 250);
@@ -76,7 +88,7 @@ var game = {
 		me.game.SPIKE_OBJECT = "spike";
 
 		// Start the game.
-		me.state.change(me.state.MAIN_MENU);
+		me.state.change(me.state.STATE_MAIN_MENU);
 	}
 };
 
