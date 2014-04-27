@@ -12,9 +12,9 @@ game.resources = [
 	// \_\_/ |_| \ /_/--\ |_|   |_| | |_| \_\_, _)_)
 	{
 		// Level Tileset
-		name: "area01_level_tiles",
+		name: "tiles32x32",
 		type: "image",
-		src:  "data/image/tile/area01_level_tiles.png"
+		src:  "data/image/tile/tiles32x32.png"
 	},
 
 	{
