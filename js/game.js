@@ -87,6 +87,10 @@ var game = {
 		// identify some entities
 		me.game.SPIKE_OBJECT = "spike";
 
+		// Global font - we'll use this to draw
+		// text on all game states
+		me.game.font = new me.BitmapFont("font16x16", 16);
+
 		// Start the game.
 		me.state.change(me.state.STATE_MAIN_MENU);
 	}

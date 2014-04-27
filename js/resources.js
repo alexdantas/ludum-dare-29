@@ -66,6 +66,17 @@ game.resources = [
 		src:  "data/image/gui/title_screen.png"
 	},
 
+	{
+		name: "menu-button-on",
+		type: "image",
+		src:  "data/image/gui/menu-button-on.png"
+	},
+	{
+		name: "menu-button-off",
+		type: "image",
+		src:  "data/image/gui/menu-button-off.png"
+	},
+
 	/* Atlases
 	 * @example
 	 * {name: "example_tps", type: "tps", src: "data/image/example_tps.json"},

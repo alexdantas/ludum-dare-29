@@ -24,9 +24,6 @@ game.GameOverState = me.ScreenObject.extend({
 				this.parent(new me.Vector2d(0, 0),
 				            me.game.viewport.width,
 				            me.game.viewport.height);
-
-				// font for the scrolling text
-				this.font = new me.BitmapFont("font16x16", 16);
 			},
 
 			update : function(dt) {
@@ -37,7 +34,7 @@ game.GameOverState = me.ScreenObject.extend({
 				var xoffset = 16 * 5;
 				var yoffset = 16 * 22;
 
-				this.font.draw(context, "GAME OVER", xoffset, yoffset);
+				me.game.font.draw(context, "GAME OVER", xoffset, yoffset);
 			}
 
 		})), 2);

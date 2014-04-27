@@ -26,6 +26,18 @@ game.MainMenuState = me.ScreenObject.extend({
 			1
 		);
 
+		// Creating and adding the Main Menu
+		this.menuItem = new me.MenuItem(
+			100, 100,
+			"TEST",
+			me.game.font,
+			function () {
+				me.state.current().menuItem.label = "LEL";
+				me.state.current().menuItem.toggle();
+			}
+		);
+		me.game.world.addChild(this.menuItem);
+
 		// Creating and adding the scrollable text
 		me.game.world.addChild(new (me.Renderable.extend ({
 
@@ -34,9 +46,6 @@ game.MainMenuState = me.ScreenObject.extend({
 				this.parent(new me.Vector2d(0, 0),
 				            me.game.viewport.width,
 				            me.game.viewport.height);
-
-				// font for the scrolling text
-				this.font = new me.BitmapFont("font16x16", 16);
 
 				// tween to animate the arrow
 				this.scrollertween = new me.Tween(this)
@@ -68,11 +77,11 @@ game.MainMenuState = me.ScreenObject.extend({
 			draw : function(context) {
 				var xoffset = 16 * 10;
 
-				this.font.draw(context, "PRESS ENTER", xoffset, 16*24);
-				this.font.draw(context, "   CLICK", xoffset, 16*25);
-				this.font.draw(context, "   TOUCH",       xoffset, 16*26);
+				me.game.font.draw(context, "PRESS ENTER", xoffset, 16*24);
+				me.game.font.draw(context, "   CLICK", xoffset, 16*25);
+				me.game.font.draw(context, "   TOUCH",       xoffset, 16*26);
 
-				this.font.draw(context, this.scroller, this.scrollerpos, 16 * 29);
+				me.game.font.draw(context, this.scroller, this.scrollerpos, 16 * 29);
 			},
 
 			onDestroyEvent : function() {
