@@ -66,10 +66,11 @@ game.MainMenuState = me.ScreenObject.extend({
 			},
 
 			draw : function(context) {
-				var xoffset = 16 * 5;
+				var xoffset = 16 * 10;
 
-				this.font.draw(context, "PRESS ENTER, CLICK OR", xoffset, 16*22);
-				this.font.draw(context, "    TAP TO PLAY",       xoffset, 16*23);
+				this.font.draw(context, "PRESS ENTER", xoffset, 16*24);
+				this.font.draw(context, "   CLICK", xoffset, 16*25);
+				this.font.draw(context, "   TOUCH",       xoffset, 16*26);
 
 				this.font.draw(context, this.scroller, this.scrollerpos, 16 * 29);
 			},
