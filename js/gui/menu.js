@@ -10,7 +10,7 @@
 // create a basic GUI Object
 me.MenuItem = me.GUI_Object.extend({
 
-	init : function (x, y, label, font, callback) {
+	init : function (x, y, label, menu, callback) {
 
 		this.select(false);
 
@@ -37,7 +37,9 @@ me.MenuItem = me.GUI_Object.extend({
 
 		this.label    = label;
 		this.callback = callback;
-		this.font     = font;
+
+		// Our big daddy
+		this.menu = menu;
 	},
 
 	toggle : function(option) {
@@ -58,7 +60,7 @@ me.MenuItem = me.GUI_Object.extend({
 
 		this.callback();
 
-		// Don't propagate the event
+		// Don't propagate the click event
 		return false;
 	},
 
@@ -66,7 +68,7 @@ me.MenuItem = me.GUI_Object.extend({
 		// Making sure the image is drawn
 		this.parent(context);
 
-		this.font.draw(
+		me.game.font.draw(
 			context,
 			this.label,
 			this.pos.x + 4,
@@ -75,7 +77,33 @@ me.MenuItem = me.GUI_Object.extend({
 	}
 });
 
-me.Menu = Object.extend({
+me.Menu = me.ObjectContainer.extend({
 
+	init : function(x, y) {
+
+		// Occupying the whole screen (viewport)
+		this.parent(x, y);
+
+		// Not wasting CPU with this
+		this.autoSort = false;
+		this.collidable = false;
+		this.z = 25;
+	},
+
+	/**
+	 * Creates a new Menu Item.
+	 */
+	addItem : function(title, callback) {
+
+		var bottom_margin = 5;
+
+		this.addChild(new me.MenuItem(
+			this.pos.x,
+			this.pos.y + (this.children.length * 32) + (this.children.length * bottom_margin),
+			title,
+			this,
+			callback
+		));
+	}
 });
 

@@ -26,17 +26,29 @@ game.MainMenuState = me.ScreenObject.extend({
 			1
 		);
 
-		// Creating and adding the Main Menu
-		this.menuItem = new me.MenuItem(
-			100, 100,
-			"TEST",
-			me.game.font,
+		this.menu = new me.Menu(32 * 1, 32 * 8);
+		this.menu.addItem(
+			"START",
 			function () {
-				me.state.current().menuItem.label = "LEL";
-				me.state.current().menuItem.toggle();
+//				me.state.current().menu.label = "LEL";
+//				me.state.current().menu.toggle();
+				console.log("Clicked first button");
 			}
 		);
-		me.game.world.addChild(this.menuItem);
+		this.menu.addItem(
+			"OPTIONS",
+			function () {
+				console.log("Clicked second button");
+			}
+		);
+		this.menu.addItem(
+			"CREDITS",
+			function () {
+				console.log("Clicked third button");
+			}
+		);
+
+		me.game.world.addChild(this.menu);
 
 		// Creating and adding the scrollable text
 		me.game.world.addChild(new (me.Renderable.extend ({
