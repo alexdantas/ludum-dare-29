@@ -6,13 +6,19 @@
 
 module.exports = function(grunt) {
 	grunt.initConfig({
+
+		// Package variables
 		pkg: grunt.file.readJSON('package.json'),
+
+		// Concatenates all javascript files into one
 		concat: {
 			dist: {
 				src: ['lib/melonJS-1.0.0-min.js', 'lib/plugins/*.js', 'js/game.js', 'js/resources.js','js/**/*.js'],
 				dest: 'build/js/app.js'
 			}
 		},
+
+		// Copies files from one place to another
 		copy: {
 			dist: {
 				files: [{
@@ -24,24 +30,27 @@ module.exports = function(grunt) {
 				}]
 			}
 		},
+
+		// Goes through the HTML file, performing actions
+		// (on this case, compressing all <script> tags into one
 		processhtml: {
 			dist: {
 				options: {
 					process: true,
-					data: {
-						title: 'My app',
-						message: 'This is production distribution'
-					}
+					commentMarker: 'compress'
 				},
 				files: {
 					'build/index.html': ['index.html']
 				}
 			}
 		},
+
+		// Minifies a `.js` file into a `.min.js`
 		uglify: {
 			options: {
+				banner: '/*full source code at <%= pkg.github %>*/',
 				report: 'min',
-				preserveComments: 'some'
+				preserveComments: 'false'
 			},
 			dist: {
 				files: {

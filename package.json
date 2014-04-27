@@ -1,6 +1,8 @@
 {
-	"name": "rabbit-hole",
-	"version": "0.5.0",
+	"name"    : "rabbit-hole",
+	"version" : "0.5.0",
+	"github"  : "https://github.com/alexdantas/ludum-dare-29",
+
 	"devDependencies": {
 		"grunt"                : "~0.4.2",
 		"grunt-processhtml"    : "~0.3.0",
