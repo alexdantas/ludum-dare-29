@@ -62,7 +62,7 @@ module.exports = function(grunt) {
 			dist: {
 				options: {
 					src: 'build/',
-					dest: '/home/alexd075/public_html/tmp',
+					dest: '/home/alexd075/public_html/games/ld29',
 					host: 'alexd075@alexdantas.net',
 					port: 2222,
 					syncDestIgnoreExcl: true

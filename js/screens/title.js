@@ -46,7 +46,7 @@ game.TitleScreen = me.ScreenObject.extend({
 
 				// For now the only messages supported are
 				// in ALL CAPS due to the bitmap font
-				this.scroller    = "Thanks for playing this game";
+				this.scroller    = "Thanks for playing this game!";
 				this.scrollerpos = 600;
 			},
 
@@ -66,7 +66,7 @@ game.TitleScreen = me.ScreenObject.extend({
 			},
 
 			draw : function(context) {
-				this.font.draw(context, "Press Enter, Click or Tap to play", 20, 240);
+				this.font.draw(context, "Press Enter, Click or Tap to play", 15, 340);
 				this.font.draw(context, this.scroller, this.scrollerpos, 440);
 			},
 
