@@ -11,7 +11,7 @@ game.enemyEntity = me.ObjectEntity.extend({
 	init : function(x, y, settings) {
 
 		// The `settings` hash is defined on Tiled.
-		settings.image = "enemy";
+		settings.image = "fire-walk";
 
 		// There we specify `width`, which we'll use as the path
 		// this enemy will follow; saving it...
@@ -19,8 +19,8 @@ game.enemyEntity = me.ObjectEntity.extend({
 		var pathHeight = settings.height;
 
 		// Adjust the size setting to match the sprite size
-		settings.spritewidth  = settings.width  = 49;
-		settings.spriteheight = settings.height = 48;
+		settings.spritewidth  = settings.width  = 32;
+		settings.spriteheight = settings.height = 32;
 
 		this.parent(x, y, settings);
 
@@ -35,19 +35,22 @@ game.enemyEntity = me.ObjectEntity.extend({
 		this.pos.x    = x + pathWidth - settings.spritewidth;
 		this.walkLeft = true;
 
-		// Adjusting the collision rectangle
-		// to the sprite - not taking the whole image.
+		// Adjusting the collision rectangle to the sprite
+		// (not taking the whole image)
 		var shape = this.getShape();
-		shape.pos.x = 3;
-		shape.resize(43, shape.height);
-		//this.updateColRect(3, 43, 0, 44);
+		shape.pos.x = 4;
+		shape.resize(
+			shape.width - 2*shape.pos.x,
+			shape.height
+		);
 
 		// X and Y velocities
 		this.setVelocity(2.5, 6);
 
 		this.health = 10;
 
-		this.renderable.addAnimation("walking", [0, 1], 400);
+		// Animation!
+		this.renderable.addAnimation("walking", [0, 1], 200);
 		this.renderable.setCurrentAnimation("walking");
 
 		this.collidable = true;

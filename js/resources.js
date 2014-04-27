@@ -30,11 +30,16 @@ game.resources = [
 		src:  "data/image/sprite/star.png"
 	},
 
+	// Enemies
 	{
-		// Enemy
-		name: "enemy",
+		name: "fire-walk",
 		type: "image",
-		src:  "data/image/sprite/quagmire.png"
+		src:  "data/image/sprite/enemy-1.png"
+	},
+	{
+		name: "fire-stand",
+		type: "image",
+		src:  "data/image/sprite/enemy-2.png"
 	},
 
 	{

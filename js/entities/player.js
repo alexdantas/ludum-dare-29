@@ -21,10 +21,8 @@ game.playerEntity = me.ObjectEntity.extend({
 		// Aside from the `settings` passed by Tiled
 		settings.image = "player-spritesheet";
 
-		settings.width  = 32;
-		settings.height = 64;
-		settings.spritewidth  = 32;
-		settings.spriteheight = 64;
+		settings.spritewidth  = settings.width  = 32;
+		settings.spriteheight = settings.height = 64;
 
 		this.parent(x, y, settings);
 
@@ -37,7 +35,10 @@ game.playerEntity = me.ObjectEntity.extend({
 		// (not assuming the whole image)
 		var shape = this.getShape();
 		shape.pos.x = 7;
-		shape.resize(16, shape.height - 1);
+		shape.resize(
+			shape.width - 2*shape.pos.x,
+			shape.height - 1
+		);
 
 		// Maximum speed on which we
 		// throw the player up
