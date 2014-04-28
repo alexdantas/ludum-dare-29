@@ -91,6 +91,7 @@ game.MainMenuState = me.ScreenObject.extend({
 			},
 
 			draw : function(context) {
+
 				var xoffset = game.half_tile(10);
 
 				me.game.font.draw(context, "PRESS ENTER", xoffset, game.half_tile(24));
@@ -108,7 +109,9 @@ game.MainMenuState = me.ScreenObject.extend({
 
 
 		// Checking out the user input:
-		// control the menu with arrow keys and select with Enter
+		// control the menu with arrow keys and
+		// select with Enter.
+		// Mouse over and click is handled by the menu itself.
 		me.input.bindKey(me.input.KEY.DOWN,  "down");
 		me.input.bindKey(me.input.KEY.UP,    "up");
 		me.input.bindKey(me.input.KEY.ENTER, "enter", true);

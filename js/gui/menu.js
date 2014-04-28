@@ -67,12 +67,42 @@ me.MenuItem = me.GUI_Object.extend({
 		// Putting on front of most things
 		// (related to the menu z order)
 		this.z = 24;
+
+		// Let's track if the mouse hovers me.
+		//
+		// This `bind` stuff is a fancy way of making
+		// a callback for an object method.
+		//
+		// So that `this.name.bind(this)` is the same as
+		// calling `this.name()` when the event happens.
+		me.input.registerPointerEvent(
+			'pointermove',
+			this,
+			this.onHover.bind(this)
+		);
 	},
 
-	toggle : function(option) {
-		this.select(! this.selected);
+	/**
+	 * Mouse passed over us.
+	 * @note This is _NOT_ automatically called by
+	 *       melonJS! If you look at the end of the
+	 *       `init` function, this is set up by ourselves.
+	 */
+	onHover : function() {
+		if (this.selected)
+			return;
+
+		// Forces the menu to select ourselves.
+		this.menu.select(this);
 	},
 
+	/**
+	 * Marks this item as selected (or not).
+	 *
+	 * @note Option is a boolean.
+	 * @note The selected state only changes the way
+	 *       this item is drawn.
+	 */
 	select : function(option) {
 		this.selected = option;
 
@@ -84,9 +114,16 @@ me.MenuItem = me.GUI_Object.extend({
 	},
 
 	/**
+	 * Toggles the selected state of this item.
+	 */
+	toggle : function(option) {
+		this.select(! this.selected);
+	},
+
+	/**
 	 * Gets called when the user clicks on the item.
 	 */
-	onClick : function (event) {
+	onClick : function(event) {
 
 		this.callback();
 
@@ -111,6 +148,8 @@ me.MenuItem = me.GUI_Object.extend({
  * The Menu!
  *
  * Basically a container of items.
+ * It keeps track of which item is selected
+ * right now and can activate it at any time.
  */
 me.Menu = me.ObjectContainer.extend({
 
@@ -192,6 +231,24 @@ me.Menu = me.ObjectContainer.extend({
 			this.selectedIndex = this.children.length - 1;
 
 		// Play a sound?
+		this.children[this.selectedIndex].select(true);
+	},
+
+	/**
+	 * Forces the menu to select a specific Item.
+	 *
+	 * @warning It is not an index, it's the Item
+	 *          Object itself!
+	 *
+	 * @note This is a costly function, since we need
+	 *       to check every element in the items array.
+	 * TODO: Remove this somehow
+	 */
+	select : function(item) {
+		this.children[this.selectedIndex].select(false);
+
+		this.selectedIndex = this.children.indexOf(item);
+
 		this.children[this.selectedIndex].select(true);
 	}
 });
