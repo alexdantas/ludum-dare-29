@@ -37,3 +37,7 @@ body {
 	image-rendering: optimize-contrast;
 	-ms-interpolation-mode: nearest-neighbor;
 }
+#description {
+	text-align: center;
+}
+

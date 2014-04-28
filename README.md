@@ -2,8 +2,10 @@
 
 ![logo](http://alexdantas.net/games/ld29/data/image/logo.png)
 
-Game entry for [the Ludum Dare #29][ld29].
-It's a simple HTML5 2D platformer, powered by [melonJS][melonjs].
+Game entry for [the Ludum Dare #29 competition][ld29] ([here's the entry][entry]).
+It's a simple HTML5 2D platformer, made in 72h and powered by [melonJS][melonjs].
+
+It works on most web browsers, including on mobile devices.
 
 ## Gameplay
 
@@ -18,14 +20,22 @@ strange enemies on her way (mostly walking-fire-people).
 | **Arrow keys** or **WASD** | Walk and jump |
 | Hold **Shift**             | Run           |
 
+This game supports touch screens.
+
+| touch/click at...          | action        |
+| -------------------------- | ------------- |
+| **Upper area**             | Jump          |
+| **Lower-right area**       | Run right     |
+| **Lower-left area**        | Run left      |
+
 ## Instructions
 
 [To play the game right now, follow this link][play].
 
-If you want your own **local version**,
-[download the repository][repo] and open `index.html` on your favorite browser.
+If you want your own **local version**, [download the repository][repo], start a
+web server and open `index.html` on your favorite browser.
 
-Note that this repository is a **development version** of the game.  It splits
+Note that this repository is a **development version** of the game. It splits
 the code over several `.js` files.
 
 You can build a **production version**, that compresses all the
@@ -42,7 +52,7 @@ And then:
 
     grunt
 
-## Project structure
+## Development
 
 Here's how the code is laid out:
 
@@ -71,8 +81,8 @@ Here's how the code is laid out:
 
 The team:
 
-* **Lead Developer**: *Alexandre Dantas* ([homepage][alexdantas])
-* **Main Artist**: *Natália Cristina Alves Barros* ([deviantArt][bdnachi])
+* **Lead Developer**: *Alexandre Dantas*              ([homepage][alexdantas])
+* **Main Artist**:    *Natália Cristina Alves Barros* ([deviantArt][bdnachi])
 
 Acknowledgments:
 
@@ -89,20 +99,22 @@ Acknowledgments:
 
 ## License
 
-The whole game is licensed under the MIT-license.
-Check file `LICENSE.md` for details on what you can and
-cannot do with the code.
+The whole code is released under the *MIT-license*.
 
-[ld29]: http://www.ludumdare.com/compo/ludum-dare-29/
-[melonjs]: http://melonjs.org/
-[play]: http://alexdantas.net/games/ld29
-[repo]: http://github.com/alexdantas/ludum-dare-29
-[alexdantas]: http://alexdantas.net
-[bdnachi]: http://bdnachi.deviantart.com/
-[tut]: http://melonjs.github.io/tutorial/
+Check file `LICENSE.md` for details on what you can and
+cannot do with it.
+
+[ld29]:        http://www.ludumdare.com/compo/ludum-dare-29/
+[entry]:       http://www.ludumdare.com/compo/ludum-dare-29/?action=preview&uid=36899
+[melonjs]:     http://melonjs.org/
+[play]:        http://alexdantas.net/games/ld29
+[repo]:        http://github.com/alexdantas/ludum-dare-29
+[alexdantas]:  http://alexdantas.net
+[bdnachi]:     http://bdnachi.deviantart.com/
+[tut]:         http://melonjs.github.io/tutorial/
 [boilerplate]: https://github.com/melonjs/boilerplate
-[fuzed]: http://opengameart.org/content/gfxlib-fuzed
-[marc]: http://spicypixel.net/
-[anders]: http://www.freelunchdesign.com/
-[alex4]: https://sourceforge.net/p/allegator/alex4/ci/master/tree/
+[fuzed]:       http://opengameart.org/content/gfxlib-fuzed
+[marc]:        http://spicypixel.net/
+[anders]:      http://www.freelunchdesign.com/
+[alex4]:       https://sourceforge.net/p/allegator/alex4/ci/master/tree/
 
