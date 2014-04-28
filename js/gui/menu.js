@@ -141,6 +141,15 @@ me.MenuItem = me.GUI_Object.extend({
 			this.pos.x + 4,
 			this.pos.y + 8
 		);
+	},
+
+	/**
+	 * Freeing resources when destroyed
+	 */
+	onDestroyEvent : function() {
+		me.input.releasePointerEvent('pointermove', this);
+
+		this.parent();
 	}
 });
 

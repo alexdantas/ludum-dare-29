@@ -35,6 +35,85 @@ game.PlayState = me.ScreenObject.extend({
 		me.input.bindKey(me.input.KEY.UP,    "jump");
 		me.input.bindKey(me.input.KEY.W,     "jump");
 		me.input.bindKey(me.input.KEY.SHIFT, "boost", false, true);
+
+		// To make able to control the game with the mouse
+		// we must watch for those events (mouse up and down)
+		//
+		// Unfortunately we have to keep two different functions
+		// for this.
+		//
+		// But since they're events, we have MULTITOUCH support!
+		me.input.registerPointerEvent(
+			'pointerdown',
+			me.game.viewport,
+			this.mouseDown.bind(this)
+		);
+		me.input.registerPointerEvent(
+			'pointerup',
+			me.game.viewport,
+			this.mouseUp.bind(this)
+		);
+	},
+
+	/**
+	 * User started pressing the mouse/finger
+	 * anywhere on the screen.
+	 * @note This is not an automatic callback from
+	 *       melonJS! I register this function at
+	 *       the end of `init`.
+	 */
+	mouseDown : function() {
+		this.clickOnGameArea(true);
+	},
+
+	/**
+	 * User released the mouse/finger
+	 * anywhere on the screen.
+	 * @note This is not an automatic callback from
+	 *       melonJS! I register this function at
+	 *       the end of `init`.
+	 */
+	mouseUp : function() {
+		this.clickOnGameArea(false);
+	},
+
+	/**
+	 * Reacts to a click/touch the user made on the
+	 * game area.
+	 * The argument tells if the mouse/finger is
+	 * pressed or released.
+	 *
+	 * This is where the magic is!
+	 * We trigger a false key event based on clicks!
+	 *
+	 * - If you click/touch the upper area, character
+	 *   jumps.
+	 * - If you click on the lower area left side the
+	 *   character walks left, and on the right side
+	 *   it walks right.
+	 */
+	clickOnGameArea : function (isClickDown) {
+
+		var mouseX = me.input.mouse.pos.x;
+		var mouseY = me.input.mouse.pos.y;
+
+		// Top Area
+		if (mouseY < me.game.viewport.height/2) {
+			me.input.triggerKeyEvent(me.input.KEY.UP, isClickDown);
+			return;
+		}
+
+		// Bottom Area
+		// Character will run! That's why this SHIFT is here for.
+		me.input.triggerKeyEvent(me.input.KEY.SHIFT, isClickDown);
+
+		// Bottom Left Area
+		if (mouseX < me.game.viewport.width/2)
+			me.input.triggerKeyEvent(me.input.KEY.LEFT, isClickDown);
+
+		// Bottom Right Area
+		else
+			me.input.triggerKeyEvent(me.input.KEY.RIGHT, isClickDown);
 	},
 
 	/**
