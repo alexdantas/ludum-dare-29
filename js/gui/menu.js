@@ -83,6 +83,9 @@ me.MenuItem = me.GUI_Object.extend({
 		);
 	},
 
+	/**
+	 * Gets called when the user clicks on the item.
+	 */
 	onClick : function (event) {
 
 		this.callback();
@@ -107,7 +110,7 @@ me.MenuItem = me.GUI_Object.extend({
 /**
  * The Menu!
  *
- * Add items and such.
+ * Basically a container of items.
  */
 me.Menu = me.ObjectContainer.extend({
 
@@ -115,6 +118,10 @@ me.Menu = me.ObjectContainer.extend({
 
 		// Occupying the whole screen (viewport)
 		this.parent(x, y);
+
+		// The index of the currently selected item
+		// inside our `children` Array
+		this.selectedIndex = 0;
 
 		// Not wasting CPU with this
 		this.autoSort   = false;
@@ -138,6 +145,54 @@ me.Menu = me.ObjectContainer.extend({
 			this,
 			callback
 		));
+
+		if (this.children.length === 1)
+			this.children[0].select(true);
+	},
+
+	/**
+	 * Activates the currently selected item.
+	 */
+	activate : function() {
+		if (this.children.length <= 0)
+			return;
+
+		this.children[this.selectedIndex].onClick();
+	},
+
+	/**
+	 * Highlights the next item.
+	 *
+	 * @note It wraps to the first if it's on the last.
+	 */
+	next : function() {
+
+		this.children[this.selectedIndex].select(false);
+
+		this.selectedIndex++;
+
+		if (this.selectedIndex >= this.children.length)
+			this.selectedIndex = 0;
+
+		// Play a sound?
+		this.children[this.selectedIndex].select(true);
+	},
+
+	/**
+	 * Highlights the previous item.
+	 *
+	 * @note It wraps to the last if it's on the first.
+	 */
+	previous : function() {
+
+		this.children[this.selectedIndex].select(false);
+		this.selectedIndex--;
+
+		if (this.selectedIndex < 0)
+			this.selectedIndex = this.children.length - 1;
+
+		// Play a sound?
+		this.children[this.selectedIndex].select(true);
 	}
 });
 

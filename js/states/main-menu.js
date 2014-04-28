@@ -91,13 +91,13 @@ game.MainMenuState = me.ScreenObject.extend({
 			},
 
 			draw : function(context) {
-				var xoffset = 16 * 10;
+				var xoffset = game.half_tile(10);
 
-				me.game.font.draw(context, "PRESS ENTER", xoffset, 16*24);
-				me.game.font.draw(context, "   CLICK", xoffset, 16*25);
-				me.game.font.draw(context, "   TOUCH",       xoffset, 16*26);
+				me.game.font.draw(context, "PRESS ENTER", xoffset, game.half_tile(24));
+				me.game.font.draw(context, "   CLICK", xoffset, game.half_tile(25));
+				me.game.font.draw(context, "   TOUCH",       xoffset, game.half_tile(26));
 
-				me.game.font.draw(context, this.scroller, this.scrollerpos, 16 * 29);
+				me.game.font.draw(context, this.scroller, this.scrollerpos, game.half_tile(29));
 			},
 
 			onDestroyEvent : function() {
@@ -106,14 +106,25 @@ game.MainMenuState = me.ScreenObject.extend({
 			}
 		})), 2);
 
-		// Change to Play state when pressing Enter or click/tap
+
+		// Checking out the user input:
+		// control the menu with arrow keys and select with Enter
+		me.input.bindKey(me.input.KEY.DOWN,  "down");
+		me.input.bindKey(me.input.KEY.UP,    "up");
 		me.input.bindKey(me.input.KEY.ENTER, "enter", true);
-		me.input.bindPointer(me.input.mouse.LEFT, me.input.KEY.ENTER);
+
+//		me.input.bindPointer(me.input.mouse.LEFT, me.input.KEY.ENTER);
 
 		this.handler = me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge) {
 
-			if (action == "enter")
-				this.startGame();
+			if (action == "down")
+				me.state.current().menu.next();
+
+			else if (action == "up")
+				me.state.current().menu.previous();
+
+			else if (action == "enter")
+				me.state.current().menu.activate();
 		});
 	},
 
@@ -127,8 +138,9 @@ game.MainMenuState = me.ScreenObject.extend({
 	 * Action to perform when leaving the state (state change).
 	 */
 	onDestroyEvent : function() {
+		me.input.unbindKey(me.input.KEY.DOWN, "down");
+		me.input.unbindKey(me.input.KEY.UP,   "up");
 		me.input.unbindKey(me.input.KEY.ENTER);
-		me.input.unbindPointer(me.input.mouse.LEFT);
 
 		me.event.unsubscribe(this.handler);
 	}
