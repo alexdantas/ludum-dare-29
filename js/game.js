@@ -7,11 +7,18 @@
 
 var game = {
 
-	/* Stores some information
-	 * that can be saved later
+	/**
+	 * Stores information that will be used on current
+	 * game session.
+	 * @note This is reset every time the game restarts
+	 *       For persistent information saving
+	 *       (across page loads, for example) see `me.save`
 	 */
 	data : {
-		score : 0
+		score : 0,
+
+		// First level to be loaded
+		currentLevel : "area00"
 	},
 
 	/**
@@ -141,6 +148,8 @@ var game = {
 			// the player's running this game.
 			firstTime : true,
 
+			// Enable/disable all audio
+			// (music and sound effects)
 			sound : true
 		});
 

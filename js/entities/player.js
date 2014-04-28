@@ -115,6 +115,13 @@ game.playerEntity = me.ObjectEntity.extend({
 		// Tells display to follow our position on both axis.
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
 
+		// A nice trick - save current level to
+		// return to it if dead.
+		// @note Saving to current session only.
+		//       If you want to persistently save it,
+		//       save to `me.save`
+		game.data.currentLevel = me.levelDirector.getCurrentLevelId();
+
 		this.type = me.game.PLAYER_OBJECT;
 	},
 
@@ -421,12 +428,11 @@ game.playerEntity = me.ObjectEntity.extend({
 		else if (me.input.isKeyPressed("score-"))
 			game.data.score -= Number.prototype.random(1, 11);
 
-		else if (me.input.isKeyPressed("area+")) { /* yeah, well... */ }
+		else if (me.input.isKeyPressed("area+"))
+			me.levelDirector.previousLevel();
 
-		else if (me.input.isKeyPressed("area-")) {
-            me.levelDirector.loadLevel("area00");
-            me.game.viewport.fadeOut(this.fade, this.duration);
-		}
+		else if (me.input.isKeyPressed("area-"))
+			me.levelDirector.previousLevel();
 	}
 });
 

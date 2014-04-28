@@ -22,7 +22,7 @@ game.PlayState = me.ScreenObject.extend({
 		// @warning On mobile devices this takes FOREVER
 		//          There must be a way I can warn the users
 		//          of such behavior.
-		me.levelDirector.loadLevel("area01");
+		me.levelDirector.loadLevel(game.data.currentLevel);
 
 		// Reset the score
 		game.data.score = 0;
