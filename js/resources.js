@@ -59,6 +59,12 @@ game.resources = [
 		type : "image",
 		src  :  "data/image/area01_bkg1.png"
 	},
+	{
+		// Parallax 3
+		name : "area01_bkg2",
+		type : "image",
+		src  :  "data/image/area01_bkg2.png"
+	},
 
 	{
 		name : "main-menu-bg",
