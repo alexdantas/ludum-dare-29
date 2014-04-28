@@ -48,6 +48,10 @@ me.MenuItem = me.GUI_Object.extend({
 		this.label    = label;
 		this.callback = callback;
 
+		// Offset to show the text label
+		// inside the button
+		this.labelOffset = new me.Vector2d(16 + 8, 16 + 8);
+
 		// Our big daddy
 		this.menu = menu;
 
@@ -138,8 +142,8 @@ me.MenuItem = me.GUI_Object.extend({
 		me.game.font.draw(
 			context,
 			this.label,
-			this.pos.x + 16 + 8,
-			this.pos.y + 16 + 8
+			this.pos.x + this.labelOffset.x,
+			this.pos.y + this.labelOffset.y
 		);
 	},
 
@@ -182,17 +186,24 @@ me.Menu = me.ObjectContainer.extend({
 	/**
 	 * Creates a new Menu Item.
 	 */
-	addItem : function(title, callback) {
+	addItem : function(title, callback, labelOffset) {
 
 		var bottom_margin = 8;
 
-		this.addChild(new me.MenuItem(
+		var item = new me.MenuItem(
 			this.pos.x,
 			this.pos.y + 2*game.tile(this.children.length) + (this.children.length * bottom_margin),
 			title,
 			this,
 			callback
-		));
+		);
+
+		// Setting an offset if specified
+		// by the user
+        if (typeof (labelOffset) !== "undefined")
+			item.labelOffset = labelOffset;
+
+		this.addChild(item);
 
 		if (this.children.length === 1)
 			this.children[0].select(true);

@@ -27,10 +27,29 @@ game.PlayState = me.ScreenObject.extend({
 		// Reset the score
 		game.data.score = 0;
 
+
 		// Add our HUD to the game world
 		this.HUD = new game.HUD.Container();
 		me.game.world.addChild(this.HUD);
 
+
+		// Placing a "pause" button right
+		// on the bottom of the screen.
+		// Must create a menu because no item
+		// can live alone.
+		this.menu = new me.Menu(-game.tile(2), me.game.viewport.height - game.tile_size);
+		this.menu.addItem(
+			"PAUSE", // label
+			function() {
+				((me.state.isPaused() ?
+				  me.state.resume(true) :
+				  me.state.pause(true)));
+			},
+			new me.Vector2d(game.tile(2) + 4, 12) //labeloffset
+		);
+		me.game.world.addChild(this.menu);
+
+		// Input
 		// Supporting both arrow keys and WASD
 		me.input.bindKey(me.input.KEY.LEFT,  "left");
 		me.input.bindKey(me.input.KEY.A,     "left");

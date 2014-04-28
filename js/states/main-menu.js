@@ -29,7 +29,7 @@ game.MainMenuState = me.ScreenObject.extend({
 		this.menu = new me.Menu(0, game.tile(8));
 		this.menu.addItem(
 			"  START",
-			function () {
+			function() {
 				// It's very ugly to directly
 				// access a game state...
 				me.state.current().startGame();
