@@ -64,7 +64,7 @@ var game = {
 		}
 
 		// Initialize the audio.
-		me.audio.init("mp3,ogg");
+		me.audio.init("ogg,mp3");
 
 		// Set a callback to run when loading is complete.
 		me.loader.onload = this.loaded.bind(this);
@@ -122,6 +122,39 @@ var game = {
 		// Global font - we'll use this to draw
 		// text on all game states
 		me.game.font = new me.BitmapFont("font16x16", 16);
+
+		// Default settings for the whole game.
+		// If we already have saved these settings,
+		// they won't have their default values.
+		me.save.add({
+			// Flag to tell if this is the first time
+			// the player's running this game.
+			firstTime : true,
+
+			sound : true
+		});
+
+
+		// If these settings have different values
+		// than the default it means we saved the
+		// settings and the user is restarting the game.
+		if (me.save.firstTime) {
+			// Do somethin'
+		}
+		else {
+			// Greet the player for returning
+			// to the game
+		}
+		me.save.firstTime = false;
+
+		// Due to the way melonJS is designed, we must
+		// first play the background music AND THEN
+		// enable/disable the audio based on the
+		// settings...
+		me.audio.playTrack("dst-inertexponent");
+
+		if (! me.save.sound)
+			me.audio.disable();
 
 		// Start the game.
 		me.state.change(me.state.STATE_MAIN_MENU);

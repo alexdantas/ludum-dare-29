@@ -34,15 +34,32 @@ game.MainMenuState = me.ScreenObject.extend({
 				// access a game state...
 				me.state.current().startGame();
 
-//				menu.label = "LEL";
-//				me.state.current().menu.toggle();
 				console.log("Clicked first button");
 			}
 		);
 		this.menu.addItem(
-			"SOUND:OFF",
+			((me.save.sound)?
+			 "SOUND:ON" :
+			 "SOUND:OFF"),
 			function () {
-				console.log("Clicked second button");
+
+				var newLabel = "";
+
+				if (me.save.sound) {
+					newLabel = "SOUND:OFF";
+					me.save.sound = false;
+					me.audio.disable();
+				}
+				else {
+					newLabel = "SOUND:ON";
+					me.save.sound = true;
+					me.audio.enable();
+				}
+
+				// That's a VERY HACKISH THING TO DO
+				// I should NEVER have to directly access
+				// stuff like this!
+				me.state.current().menu.children[1].label = newLabel;
 			}
 		);
 		this.menu.addItem(
