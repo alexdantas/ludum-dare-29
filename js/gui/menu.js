@@ -138,8 +138,8 @@ me.MenuItem = me.GUI_Object.extend({
 		me.game.font.draw(
 			context,
 			this.label,
-			this.pos.x + 4,
-			this.pos.y + 8
+			this.pos.x + 16 + 8,
+			this.pos.y + 16 + 8
 		);
 	},
 
@@ -184,11 +184,11 @@ me.Menu = me.ObjectContainer.extend({
 	 */
 	addItem : function(title, callback) {
 
-		var bottom_margin = 5;
+		var bottom_margin = 8;
 
 		this.addChild(new me.MenuItem(
 			this.pos.x,
-			this.pos.y + game.tile(this.children.length) + (this.children.length * bottom_margin),
+			this.pos.y + 2*game.tile(this.children.length) + (this.children.length * bottom_margin),
 			title,
 			this,
 			callback

@@ -18,7 +18,7 @@ game.PlayState = me.ScreenObject.extend({
 	onResetEvent : function() {
 
 		// Load the first level
-		me.levelDirector.loadLevel("area00");
+		me.levelDirector.loadLevel("area01");
 
 		// Reset the score
 		game.data.score = 0;

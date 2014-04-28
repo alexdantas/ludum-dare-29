@@ -26,9 +26,9 @@ game.MainMenuState = me.ScreenObject.extend({
 			1
 		);
 
-		this.menu = new me.Menu(game.tile(1), game.tile(8));
+		this.menu = new me.Menu(0, game.tile(8));
 		this.menu.addItem(
-			"START",
+			"  START",
 			function () {
 				// It's very ugly to directly
 				// access a game state...
@@ -40,13 +40,13 @@ game.MainMenuState = me.ScreenObject.extend({
 			}
 		);
 		this.menu.addItem(
-			"OPTIONS",
+			"SOUND:OFF",
 			function () {
 				console.log("Clicked second button");
 			}
 		);
 		this.menu.addItem(
-			"CREDITS",
+			" CREDITS",
 			function () {
 				console.log("Clicked third button");
 			}
@@ -93,10 +93,6 @@ game.MainMenuState = me.ScreenObject.extend({
 			draw : function(context) {
 
 				var xoffset = game.half_tile(10);
-
-				me.game.font.draw(context, "PRESS ENTER", xoffset, game.half_tile(24));
-				me.game.font.draw(context, "   CLICK", xoffset, game.half_tile(25));
-				me.game.font.draw(context, "   TOUCH",       xoffset, game.half_tile(26));
 
 				me.game.font.draw(context, this.scroller, this.scrollerpos, game.half_tile(29));
 			},
