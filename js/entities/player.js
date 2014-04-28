@@ -164,6 +164,10 @@ game.playerEntity = me.ObjectEntity.extend({
 				this.standing = true;
 		}
 
+		// Secret! Don't tell anyone
+		if (game.debugMode)
+			this.debugUpdate();
+
 		// Updating speed based on the previous input.
 		if (! this.standing && walkedOnThisFrame) {
 
@@ -218,7 +222,7 @@ game.playerEntity = me.ObjectEntity.extend({
 					this.vel.y = -this.maxVel.y * me.timer.tick;
 
 					this.jumping = true;
-
+					me.audio.play("stomp");
 				}
 				else {
 
@@ -304,6 +308,8 @@ game.playerEntity = me.ObjectEntity.extend({
 			// Opening a window of time on which the player
 			// can hold the button to jump higher
 			this.jumpTimer = me.timer.getTime();
+
+			me.audio.play("jump");
 		}
 		else if (!imOnGround && iWannaJump) {
 
@@ -328,7 +334,99 @@ game.playerEntity = me.ObjectEntity.extend({
 		me.device.vibrate(500);
 		me.game.world.removeChild(this);
 
-		me.state.change(me.state.STATE_GAME_OVER);
+		// Shake the screen a little bit and,
+		// when finished, go to the game over screen.
+		me.game.viewport.shake(
+			7, // max pixels to shake
+			500, // duration (ms)
+			me.game.viewport.AXIS.BOTH,
+			function() {
+				me.state.change(me.state.STATE_GAME_OVER);
+			}
+		);
+	},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// Oh my, you found me!
+	debugUpdate : function() {
+
+		if (me.input.isKeyPressed("die"))
+			this.die();
+
+		else if (me.input.isKeyPressed("score+"))
+			game.data.score += Number.prototype.random(1, 11);
+
+		else if (me.input.isKeyPressed("score-"))
+			game.data.score -= Number.prototype.random(1, 11);
+
+		else if (me.input.isKeyPressed("area+")) { /* yeah, well... */ }
+
+		else if (me.input.isKeyPressed("area-")) {
+            me.levelDirector.loadLevel("area00");
+            me.game.viewport.fadeOut(this.fade, this.duration);
+		}
 	}
 });
 

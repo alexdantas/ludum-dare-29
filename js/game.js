@@ -41,6 +41,11 @@ var game = {
 	},
 
 	/**
+	 * Aww yeah
+	 */
+	debugMode : false,
+
+	/**
 	 * This function runs as soon as the page loads.
 	 *
 	 * Meaning when all resources were downloaded from
@@ -56,10 +61,15 @@ var game = {
 			return;
 		}
 
-		// Add "#debug" to the URL to enable the debug Panel
+		// Add "#debug" to the URL to enable the debug mode
+		// - Has a debug Panel on top
+		// - Several gameplay features are enabled (like secret keys)
+		//
 		if (document.location.hash === "#debug") {
 			window.onReady(function() {
 				me.plugin.register.defer(this, debugPanel, "debug");
+
+				game.debugMode = true;
 			});
 		}
 

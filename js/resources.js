@@ -111,7 +111,8 @@ game.resources = [
 	},
 
 
-	/* Background music.
+	/**
+	 * Background music.
 	 *
 	 * @note The rules to specify the file are kinda different
 	 *       from the ones above.
@@ -125,11 +126,29 @@ game.resources = [
 		type    : "audio",
 		src     : "data/audio/bgm/",
 		channel : 1
-	}
+	},
 
-	/* Sound effects.
-	 * @example
-	 * {name: "example_sfx", type: "audio", src: "data/sfx/", channel : 2}
+	/**
+	 * Sound effects.
+	 * @note Same rules above apply.
 	 */
+	 {
+		 name    : "jump",
+		 type    : "audio",
+		 src     : "data/audio/sfx/",
+		 channel : 2
+	 },
+	 {
+		 name    : "cling",
+		 type    : "audio",
+		 src     : "data/audio/sfx/",
+		 channel : 2
+	 },
+	 {
+		 name    : "stomp",
+		 type    : "audio",
+		 src     : "data/audio/sfx/",
+		 channel : 2
+	 }
 ];
 

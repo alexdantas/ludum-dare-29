@@ -18,6 +18,10 @@ game.PlayState = me.ScreenObject.extend({
 	onResetEvent : function() {
 
 		// Load the first level
+		//
+		// @warning On mobile devices this takes FOREVER
+		//          There must be a way I can warn the users
+		//          of such behavior.
 		me.levelDirector.loadLevel("area01");
 
 		// Reset the score
@@ -35,6 +39,16 @@ game.PlayState = me.ScreenObject.extend({
 		me.input.bindKey(me.input.KEY.UP,    "jump");
 		me.input.bindKey(me.input.KEY.W,     "jump");
 		me.input.bindKey(me.input.KEY.SHIFT, "boost", false, true);
+
+		// Extra keys reserved for the developers
+		// Don't you try to cheat using those!
+		if (game.debugMode) {
+			me.input.bindKey(me.input.KEY.I, "die");
+			me.input.bindKey(me.input.KEY.O, "score+");
+			me.input.bindKey(me.input.KEY.P, "score-");
+			me.input.bindKey(me.input.KEY.K, "area+");
+			me.input.bindKey(me.input.KEY.L, "area-");
+		}
 
 		// To make able to control the game with the mouse
 		// we must watch for those events (mouse up and down)
@@ -132,6 +146,14 @@ game.PlayState = me.ScreenObject.extend({
 		me.input.unbindKey(me.input.KEY.UP,    "jump",  true);
 		me.input.unbindKey(me.input.KEY.W,     "jump",  true);
 		me.input.unbindKey(me.input.KEY.SHIFT, "boost", true);
+
+		if (game.debugMode) {
+			me.input.unbindKey(me.input.KEY.I, "die");
+			me.input.unbindKey(me.input.KEY.O, "score+");
+			me.input.unbindKey(me.input.KEY.P, "score-");
+			me.input.unbindKey(me.input.KEY.K, "area+");
+			me.input.unbindKey(me.input.KEY.L, "area-");
+		}
 	}
 });
 

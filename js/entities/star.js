@@ -33,6 +33,7 @@ game.starEntity = me.CollectableEntity.extend({
 		this.collidable = false;
 
 		me.game.world.removeChild(this);
+		me.audio.play("cling");
 	}
 });
 
