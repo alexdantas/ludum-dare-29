@@ -420,7 +420,8 @@ game.playerEntity = me.ObjectEntity.extend({
 	debugUpdate : function() {
 
 		if (me.input.isKeyPressed("die"))
-			this.die();
+			me.video.init("screen", 960, 960, true);
+//			this.die();
 
 		else if (me.input.isKeyPressed("score+"))
 			game.data.score += Number.prototype.random(1, 11);
